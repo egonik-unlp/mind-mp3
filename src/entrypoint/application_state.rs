@@ -2,9 +2,7 @@ use axum::extract::FromRef;
 use leptos::config::LeptosOptions;
 
 use crate::{
-    core::database::connection::DbPool,
-    // vector_store::VectorDbPool},
-    thought::repository::ThougtRepository,
+    core::database::connection::DbPool, thought::repository::ThougtRepository,
     thought::service::ThoughtService,
 };
 

@@ -1,3 +1,4 @@
+use crate::thought::component::Songs;
 use leptos::prelude::*;
 use leptos_meta::{provide_meta_context, MetaTags, Stylesheet, Title};
 use leptos_router::{
@@ -46,7 +47,6 @@ pub fn App() -> impl IntoView {
         </Router>
     }
 }
-
 /// Renders the home page of your application.
 #[component]
 fn HomePage() -> impl IntoView {
@@ -56,6 +56,7 @@ fn HomePage() -> impl IntoView {
 
     view! {
         <h1>"Welcome to Leptos!"</h1>
+        <Songs/>
         <button on:click=on_click>"Click Me: " {count}</button>
     }
 }
