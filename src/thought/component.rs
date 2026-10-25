@@ -15,7 +15,7 @@ pub fn ThoughtTable(action: ServerAction<CreateThought>) -> impl IntoView {
             {move || Suspend::new(async move {
                 match thoughts.await {
                     Ok(thoughts) => view! {
-                        <table>
+                        <table class="flex-4/5 bg-blue-600 ">
                             <thead>
                                 <tr>
                                     <th>"Artist"</th>
@@ -27,8 +27,8 @@ pub fn ThoughtTable(action: ServerAction<CreateThought>) -> impl IntoView {
                                     .into_iter()
                                     .map(|thought| view! {
                                         <tr>
-                                            <td>{thought.track.track_artist}</td>
-                                            <td>{thought.track.track_name}</td>
+                                            <td class ="flex-16 bg-indigo-500 overflow-auto">{thought.track.track_artist}</td>
+                                            <td class="flex-16 bg-yellow-400 overflow-visible">{thought.track.track_name}</td>
                                         </tr>
                                     })
                                     .collect_view()}
@@ -74,7 +74,7 @@ pub fn CreateSong(action: ServerAction<CreateThought>) -> impl IntoView {
     };
 
     view! {
-        <form on:submit=on_submit>
+        <form on:submit=on_submit class= "bg-amber-600 flex-8">
             <input type="text" placeholder="Artist" required bind:value=artist />
             <input type="text" placeholder="Song" required bind:value=name />
             <button type="submit" disabled=move || action.pending().get()>"Add"</button>

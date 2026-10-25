@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+/* Leptos components live in Rust: scan `view!` macros for class names. */
+@source "../src/**/*.rs";
+
+@layer base {
+	body {
+		font-family: sans-serif;
+		text-align: center;
+	}
+}
