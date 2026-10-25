@@ -1,3 +1,4 @@
+use anyhow::Context;
 use diesel::{
     prelude::*,
     r2d2::{ConnectionManager, Pool, PooledConnection},
@@ -33,15 +34,18 @@ where
 
 pub async fn interact_with_connection<F, T>(pool: &DbPool, f: F) -> anyhow::Result<T>
 where
-    F: FnOnce(&mut PooledConnection<ConnectionManager<PgConnection>>) -> anyhow::Result<T>
+    F: FnOnce(
+            &mut PooledConnection<ConnectionManager<PgConnection>>,
+        ) -> diesel::result::QueryResult<T>
         + 'static
         + Send,
     T: Send + 'static,
 {
     let pool = pool.clone();
     tokio::task::spawn_blocking(move || {
-        let mut conn = pool.get()?;
-        conn.transaction(|conn| f(conn))
+        let mut conn = pool.get().context("Getting conn from pool")?;
+        conn.transaction(|conn| f(conn)).map_err(Into::into)
     })
-    .await?
+    .await
+    .context("Returning from thread")?
 }

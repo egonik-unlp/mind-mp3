@@ -13,4 +13,8 @@ impl ThoughtService {
         self.repository.create_thought(input).await?;
         Ok(())
     }
+    pub async fn get_all_thoughts(&self) -> anyhow::Result<Vec<ThoughtDto>> {
+        let res = self.repository.get_all_thoughts().await?;
+        Ok(res)
+    }
 }
