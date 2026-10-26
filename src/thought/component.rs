@@ -1,6 +1,7 @@
 use crate::thought::dto::{ThoughtDto, TrackDto};
 use crate::thought::server::CreateThought;
 use leptos::ev::SubmitEvent;
+use leptos::html::S;
 use leptos::prelude::*;
 
 #[component]
@@ -20,6 +21,7 @@ pub fn ThoughtTable(action: ServerAction<CreateThought>) -> impl IntoView {
                                 <tr>
                                     <th>"Artist"</th>
                                     <th>"Track"</th>
+                                    <th>"Context"</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -29,6 +31,7 @@ pub fn ThoughtTable(action: ServerAction<CreateThought>) -> impl IntoView {
                                         <tr>
                                             <td class ="flex-16 bg-indigo-500 overflow-auto">{thought.track.track_artist}</td>
                                             <td class="flex-16 bg-yellow-400 overflow-visible">{thought.track.track_name}</td>
+                                            <td class="flex-16 bg-yellow-400 overflow-visible">{thought.context}</td>
                                         </tr>
                                     })
                                     .collect_view()}
@@ -58,6 +61,7 @@ pub fn Songs() -> impl IntoView {
 pub fn CreateSong(action: ServerAction<CreateThought>) -> impl IntoView {
     let artist = RwSignal::new(String::new());
     let name = RwSignal::new(String::new());
+    let context = RwSignal::new(String::new());
 
     let on_submit = move |ev: SubmitEvent| {
         ev.prevent_default();
@@ -67,16 +71,19 @@ pub fn CreateSong(action: ServerAction<CreateThought>) -> impl IntoView {
                     track_artist: artist.get(),
                     track_name: name.get(),
                 },
+                context: context.get(),
             },
         });
         artist.set(String::new());
+        context.set(String::new());
         name.set(String::new());
     };
 
     view! {
-        <form on:submit=on_submit class= "bg-amber-600 flex-8">
-            <input type="text" placeholder="Artist" required bind:value=artist />
+        <form on:submit=on_submit class= "bg-amber-600">
+            <input  type="text" placeholder="Artist" required bind:value=artist />
             <input type="text" placeholder="Song" required bind:value=name />
+            <input type="text" placeholder="Context" required bind:value=context />
             <button type="submit" disabled=move || action.pending().get()>"Add"</button>
         </form>
         {move || {

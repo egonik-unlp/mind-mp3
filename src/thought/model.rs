@@ -11,6 +11,7 @@ use crate::thought::dto::{ThoughtDto, TrackDto};
 pub struct Thought {
     id: i32,
     created_at: chrono::NaiveDate,
+    context: String,
 }
 
 #[derive(
@@ -31,6 +32,7 @@ pub struct Track {
 #[diesel(table_name = crate::core::database::schema::thoughts)]
 pub struct InsertableThought {
     pub created_at: chrono::NaiveDate,
+    pub context: String,
 }
 #[derive(Debug, Clone, Insertable)]
 #[diesel(table_name = crate::core::database::schema::tracks)]
@@ -75,15 +77,23 @@ impl From<Track> for TrackDto {
 
 impl From<(Vec<Track>, Thought)> for ThoughtDto {
     fn from(value: (Vec<Track>, Thought)) -> Self {
-        let Thought { id, created_at } = value.1;
+        let Thought {
+            id,
+            created_at,
+            context,
+        } = value.1;
         let track = value.0.first().unwrap().clone().into();
-        ThoughtDto { track }
+        ThoughtDto { track, context }
     }
 }
 
 impl From<ThoughtDto> for InsertableThought {
-    fn from(_value: ThoughtDto) -> Self {
+    fn from(value: ThoughtDto) -> Self {
         let created_at = Utc::now().date_naive();
-        Self { created_at }
+        let context = value.context;
+        Self {
+            created_at,
+            context,
+        }
     }
 }

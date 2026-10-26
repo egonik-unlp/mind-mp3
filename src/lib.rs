@@ -1,7 +1,9 @@
 pub mod app;
 pub mod core;
 pub mod entrypoint;
+pub mod spotify;
 pub mod thought;
+
 #[cfg(feature = "hydrate")]
 #[wasm_bindgen::prelude::wasm_bindgen]
 pub fn hydrate() {

@@ -1,5 +1,6 @@
 -- Your SQL goes here
 create table thoughts (
   id serial primary key,
+  context text not null,
   created_at date not null
 )

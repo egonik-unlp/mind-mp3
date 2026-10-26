@@ -28,6 +28,8 @@ dotenvy = { version = "0.15.7", optional = true }
 anyhow = "1.0.104"
 serde_json = "1.0.154"
 qdrant-client = { version = "1.20.0", optional = true }
+leptos-use = "0.20.0"
+reqwest = { version = "0.13.5", optional = true }
 
 [features]
 ssr = [
@@ -37,6 +39,7 @@ ssr = [
   "dep:chrono",
   "dep:diesel",
   "dep:diesel_migrations",
+  "dep:reqwest",
   "dep:qdrant-client",
   "dep:dotenvy",
   "leptos/ssr",

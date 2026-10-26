@@ -3,6 +3,7 @@
 diesel::table! {
     thoughts (id) {
         id -> Int4,
+        context -> Text,
         created_at -> Date,
     }
 }
