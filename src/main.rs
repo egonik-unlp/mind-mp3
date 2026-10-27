@@ -2,13 +2,15 @@
 #[tokio::main]
 async fn main() {
     use axum::Router;
-    use leptos::logging::log;
-    use leptos::prelude::*;
+    use leptos::{logging::log, prelude::*};
     use leptos_axum::{generate_route_list, LeptosRoutes};
-    use mind_mp3::app::*;
-    use mind_mp3::core::config::model::Config;
-    use mind_mp3::core::database::connection::get_connection_pool;
-    use mind_mp3::entrypoint::application_state::AppState;
+    use mind_mp3::{
+        app::*,
+        core::{config::model::Config, database::connection::get_connection_pool},
+        entrypoint::application_state::AppState,
+        spotify::client::SpotifyClient,
+    };
+
     let conf = get_configuration(None).unwrap();
     let addr = conf.leptos_options.site_addr;
     let leptos_options = conf.leptos_options;
@@ -17,7 +19,12 @@ async fn main() {
 
     let config = Config::from_env();
     let connection = get_connection_pool(config.database_url);
-    let state = AppState::new(connection, leptos_options);
+    let spotify_client = SpotifyClient::new(
+        config.spotify_client_id,
+        config.spotify_client_secret,
+        config.spotify_endpoint,
+    );
+    let state = AppState::new(connection, spotify_client, leptos_options);
 
     let app = Router::new()
         .leptos_routes_with_context(
