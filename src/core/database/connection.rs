@@ -4,7 +4,7 @@ use diesel::{
     r2d2::{ConnectionManager, Pool, PooledConnection},
 };
 use dotenvy::dotenv;
-use std::{env, println, time::Duration};
+use std::time::Duration;
 pub type DbPool = Pool<ConnectionManager<PgConnection>>;
 pub fn get_connection_pool(database_url: String) -> DbPool {
     dotenv().ok();

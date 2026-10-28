@@ -1,9 +1,8 @@
-use chrono::NaiveDate;
 use serde::{Deserialize, Serialize};
 
 use std::env;
 
-#[derive()]
+#[derive(Debug, Clone)]
 pub struct Config {
     // pub qdrant_url: String,
     // pub qdrant_api_key: String,

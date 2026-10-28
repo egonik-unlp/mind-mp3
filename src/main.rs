@@ -18,6 +18,7 @@ async fn main() {
     let routes = generate_route_list(App);
 
     let config = Config::from_env();
+    println!("{:#?}", config.clone());
     let connection = get_connection_pool(config.database_url);
     let spotify_client = SpotifyClient::new(
         config.spotify_client_id,
