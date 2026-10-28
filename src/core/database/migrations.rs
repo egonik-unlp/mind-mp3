@@ -1,4 +1,3 @@
-use anyhow::Context;
 use diesel::PgConnection;
 use diesel_migrations::{embed_migrations, EmbeddedMigrations, MigrationHarness};
 

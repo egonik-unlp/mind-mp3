@@ -1,12 +1,13 @@
-use crate::core::database::connection::interact_with_connection;
-use crate::core::database::connection::DbPool;
-use crate::core::database::schema::thoughts;
-use crate::core::database::schema::tracks;
-use crate::thought::dto::ThoughtDto;
-use crate::thought::dto::TrackDto;
-use crate::thought::model::InsertableThought;
-use crate::thought::model::Thought;
-use crate::thought::model::Track;
+use crate::{
+    core::database::{
+        connection::{interact_with_connection, DbPool},
+        schema::{thoughts, tracks},
+    },
+    thought::{
+        dto::ThoughtDto,
+        model::{InsertableThought, Thought, Track},
+    },
+};
 use diesel::dsl::insert_into;
 use diesel::prelude::*;
 

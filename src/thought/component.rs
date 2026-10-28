@@ -1,8 +1,8 @@
-use crate::thought::dto::{ThoughtDto, TrackDto};
-use crate::thought::server::CreateThought;
-use leptos::ev::SubmitEvent;
-use leptos::html::S;
-use leptos::prelude::*;
+use crate::thought::{
+    dto::{ThoughtDto, TrackDto},
+    server::CreateThought,
+};
+use leptos::{ev::SubmitEvent, html::S, prelude::*};
 
 #[component]
 pub fn ThoughtTable(action: ServerAction<CreateThought>) -> impl IntoView {
